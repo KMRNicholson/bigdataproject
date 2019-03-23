@@ -3,7 +3,16 @@ class SnippetsController < ApplicationController
 
   # GET /snippets/1
   def show
-    
+    render json: @snippet
+  end
+
+  # POST /snippets/search
+  def search
+    @test = params.fetch(:query)
+
+    #TODO: search labels and src of the snippets table
+
+    render json: @test
   end
 
   # POST /snippets
