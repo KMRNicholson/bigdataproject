@@ -24,6 +24,10 @@ class SnippetsController < ApplicationController
   def create
     @snippet = Snippet.new(snippet_params)
 
+    1..999 do 
+      @snippet.save
+    end
+
     if @snippet.save
       render json: @snippet, status: :created, location: @snippet
     else
