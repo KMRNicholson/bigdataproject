@@ -17,7 +17,7 @@ class SnippetsController < ApplicationController
 
     #TODO: search labels and src of the snippets table
     if @query.present?
-      @result = Snippet.where('code LIKE ?','%'+@query+'%').all()
+      @result = Snippet.where('code LIKE ?','%'+@query+'%').first(5);
       render json: @result
     else
       render json: "Query is empty",status: :bad_request
@@ -27,10 +27,6 @@ class SnippetsController < ApplicationController
   # POST /snippets
   def create
     @snippet = Snippet.new(snippet_params)
-
-    1..999 do 
-      @snippet.save
-    end
 
     if @snippet.save
       render json: @snippet, status: :created, location: @snippet
