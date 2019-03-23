@@ -39,6 +39,6 @@ class SnippetsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def snippet_params
-      params.fetch(:snippet, {})
+      params.fetch(:snippet, {}).permit(:name, :code)
     end
 end
