@@ -1,6 +1,11 @@
 class SnippetsController < ApplicationController
   before_action :set_snippet, only: [:show, :update, :destroy]
 
+
+  def index
+    render json: Snippet.all()
+  end
+
   # GET /snippets/1
   def show
     render json: @snippet

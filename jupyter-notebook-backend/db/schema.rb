@@ -10,16 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_23_165619) do
+ActiveRecord::Schema.define(version: 2019_03_23_191935) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "snippets", force: :cascade do |t|
-    t.string "name"
-    t.text "code"
+    t.string "name", null: false
+    t.text "code", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name", "code"], name: "snippets_search_idx", opclass: :gin_trgm_ops, using: :gin
   end
 
 end
