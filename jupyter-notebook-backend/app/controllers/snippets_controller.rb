@@ -13,11 +13,15 @@ class SnippetsController < ApplicationController
 
   # POST /snippets/search
   def search
-    @test = params.fetch(:query)
+    @query = params.fetch(:query)
 
     #TODO: search labels and src of the snippets table
-
-    render json: @test
+    if @query.present?
+      @result = Snippet.where('code LIKE ?','%'+@query+'%').all()
+      render json: @result
+    else
+      render json: "Query is empty",status: :bad_request
+    end
   end
 
   # POST /snippets
