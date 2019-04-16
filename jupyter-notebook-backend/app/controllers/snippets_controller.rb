@@ -17,7 +17,17 @@ class SnippetsController < ApplicationController
 
     #TODO: search labels and src of the snippets table
     if @query.present?
-      @result = Snippet.where('code LIKE ?','%'+@query+'%').first(5);
+      @query_String = 'Select * from snippets where code LIKE '  
+      i=0
+      @query.each do |q|
+        if i ==0 then
+          @query_String+= '\'%'+q+'%\''
+        else
+          @query_String+=' AND code LIKE \'%' + q+'%\''
+        end
+        i=i+1
+      end
+      @result = Snippet.find_by_sql(@query_String).first(5)
       render json: @result
     else
       render json: "Query is empty",status: :bad_request
