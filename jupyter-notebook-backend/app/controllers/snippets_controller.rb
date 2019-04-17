@@ -1,3 +1,4 @@
+require 'pg'
 class SnippetsController < ApplicationController
   before_action :set_snippet, only: [:show, :update, :destroy]
 
@@ -27,7 +28,10 @@ class SnippetsController < ApplicationController
         end
         i=i+1
       end
-      @result = Snippet.find_by_sql(@query_String).first(5)
+      
+      conn = PG.connect(:dbname => 'jupyternotebook_dev',:user => 'jacob')
+      @result = conn.exec(@query_String).first(5)
+      conn.close
       render json: @result
     else
       render json: "Query is empty",status: :bad_request
