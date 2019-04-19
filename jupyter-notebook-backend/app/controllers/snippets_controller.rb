@@ -24,12 +24,12 @@ class SnippetsController < ApplicationController
         if i ==0 then
           @query_String+= '\'%'+q+'%\''
         else
-          @query_String+=' AND code LIKE \'%' + q+'%\''
+          @query_String+=' OR code LIKE \'%' + q+'%\''
         end
         i=i+1
       end
-      
       conn = PG.connect(:dbname => 'jupyternotebook_dev',:user => 'jacob')
+      @query_String += ' ORDER by snippets.name'
       @result = conn.exec(@query_String).first(5)
       conn.close
       render json: @result
