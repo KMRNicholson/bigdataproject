@@ -18,7 +18,7 @@ class SnippetsController < ApplicationController
 
     #TODO: search labels and src of the snippets table
     if @query.present?
-      @query_String = 'Select * from snippets where code LIKE '  
+      @query_String = 'Select DISTINCT name,code from snippets where code LIKE '  
       i=0
       @query.each do |q|
         if i ==0 then
